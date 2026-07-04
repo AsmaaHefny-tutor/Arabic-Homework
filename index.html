@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجب الدرس الأول - Lesson 1 Homework</title>
+    
+    <!-- Tailwind CSS for modern responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Font "Cairo" for beautiful Arabic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for cute icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- EmailJS SDK for sending emails directly from front-end -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Canvas Confetti for victory celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f7f4;
+            background-image: radial-gradient(#dfede6 1.5px, transparent 1.5px), radial-gradient(#dfede6 1.5px, #f0f7f4 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .bubbly-button {
+            transition: all 0.2s ease;
+        }
+        .bubbly-button:active {
+            transform: scale(0.95);
+        }
+        .custom-shadow {
+            box-shadow: 0 8px 0px 0px rgba(220, 235, 227, 1);
+        }
+        .star-anim {
+            animation: starFloat 1.2s ease-out forwards;
+        }
+        @keyframes starFloat {
+            0% { transform: translateY(0) scale(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-80px) scale(1.5) rotate(180deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16 text-slate-800">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-emerald-400 to-teal-500 text-white py-8 px-4 rounded-b-[2.5rem] shadow-lg text-center relative overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+        
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-2 tracking-wide drop-shadow-md">واجب الدرس الأول ✨</h1>
+        <p class="text-lg md:text-xl font-medium text-emerald-50 text-center flex justify-center items-center gap-2">
+            <span>Lesson 1 Homework</span>
+        </p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-3xl mx-auto px-4 mt-8">
+
+        <!-- Progress Bar (Sticky Top) -->
+        <div class="sticky top-2 z-10 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-md border-2 border-emerald-100 mb-8 flex flex-col gap-2">
+            <div class="flex justify-between items-center text-sm font-bold text-emerald-700">
+                <span>مستوى الإنجاز • Progress</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full w-0 transition-all duration-500"></div>
+            </div>
+        </div>
+
+        <!-- Student Info Form (Required Card) -->
+        <div class="bg-white rounded-3xl p-6 md:p-8 border-3 border-emerald-200 shadow-xl mb-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-2 h-full bg-emerald-400"></div>
+            <h2 class="text-xl font-bold mb-4 flex items-center gap-2 text-emerald-800">
+                <i class="fa-solid fa-user-graduate"></i>
+                بيانات الطالب • Student Details
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-600 mb-1">اسم الطالب / Student Name *</label>
+                    <input type="text" id="student-name" required placeholder="اكتب اسمك هنا..." 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-emerald-400 focus:outline-none transition-all text-right placeholder:text-slate-300">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-600 mb-1">البريد الإلكتروني / Email *</label>
+                    <input type="email" id="student-email" required placeholder="your.email@example.com" 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-emerald-400 focus:outline-none transition-all text-left placeholder:text-slate-300">
+                </div>
+            </div>
+        </div>
+
+        <!-- Questions Wrapper -->
+        <form id="homework-form" onsubmit="event.preventDefault();" class="space-y-8">
+
+            <!-- Question 1 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q1">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ١ • Q1</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    اختر الرد الصحيح: <span class="text-emerald-600">عامل إيه؟</span><br>
+                    <span class="text-sm text-slate-400 font-medium">Choose the correct response: <span class="italic font-semibold">3amel eh?</span></span>
+                </h3>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q1" value="كويس" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">كويس</span>
+                            <span class="text-xs text-slate-400">Kwayyes</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q1" value="مع السلامة" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">مع السلامة</span>
+                            <span class="text-xs text-slate-400">Ma3 El Salama</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q1" value="سلام" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">سلام</span>
+                            <span class="text-xs text-slate-400">Salam</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q2">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٢ • Q2</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    الرد المناسب عند المغادرة لقول: <span class="text-emerald-600">مع السلامة</span><br>
+                    <span class="text-sm text-slate-400 font-medium">Choose the correct farewell response to: <span class="italic font-semibold">Ma3 El Salama</span></span>
+                </h3>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q2" value="الله يسلمك" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">الله يسلمك</span>
+                            <span class="text-xs text-slate-400">Allah Yesallmak</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q2" value="صباح الخير" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">صباح الخير</span>
+                            <span class="text-xs text-slate-400">Sabah El Kheir</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q2" value="اسمي..." class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">اسمي...</span>
+                            <span class="text-xs text-slate-400">Esmy...</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 3 (Tap-to-Match Game) -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q3">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٣ • Q3</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-1 text-right">وصل العبارة بالرد المناسب لها:</h3>
+                <p class="text-sm text-slate-400 mb-6 font-medium text-right">Match the greeting on the left with its reply on the right.</p>
+
+                <!-- Instructive sub-alert -->
+                <div class="text-xs bg-emerald-50 text-emerald-700 rounded-xl p-3 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-emerald-500"></i>
+                    <span>اضغط على كلمة في العمود الأيمن ثم الرد المناسب في الأيسر لتوصيلهما. (Tap on left then right to match!)</span>
+                </div>
+
+                <!-- Match UI Columns -->
+                <div class="grid grid-cols-2 gap-4 relative">
+                    <!-- Left Column (Phrases) -->
+                    <div class="space-y-3" id="match-left-col">
+                        <button type="button" data-match-id="q3-1" class="match-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>سلام</span>
+                            <span class="text-xs text-slate-400 font-normal font-sans">Salam</span>
+                        </button>
+                        <button type="button" data-match-id="q3-2" class="match-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>مع السلامة</span>
+                            <span class="text-xs text-slate-400 font-normal font-sans">Ma3 El Salama</span>
+                        </button>
+                        <button type="button" data-match-id="q3-3" class="match-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>عامل إيه؟</span>
+                            <span class="text-xs text-slate-400 font-normal font-sans">3amel eh?</span>
+                        </button>
+                        <button type="button" data-match-id="q3-4" class="match-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>أشوفك بكرة</span>
+                            <span class="text-xs text-slate-400 font-normal font-sans">Ashofak bokra</span>
+                        </button>
+                    </div>
+
+                    <!-- Right Column (Answers - shuffled) -->
+                    <div class="space-y-3" id="match-right-col">
+                        <button type="button" data-target-id="q3-3" class="target-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>كويس</span>
+                            <span class="text-xs text-slate-400 font-normal invisible font-sans">...</span>
+                        </button>
+                        <button type="button" data-target-id="q3-4" class="target-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>إن شاء الله</span>
+                            <span class="text-xs text-slate-400 font-normal invisible font-sans">...</span>
+                        </button>
+                        <button type="button" data-target-id="q3-1" class="target-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>مع السلامة</span>
+                            <span class="text-xs text-slate-400 font-normal invisible font-sans">...</span>
+                        </button>
+                        <button type="button" data-target-id="q3-2" class="target-btn w-full p-4 rounded-2xl border-2 border-slate-200 font-bold text-slate-700 bg-slate-50 transition-all text-center flex flex-col items-center justify-center gap-1 hover:border-purple-300">
+                            <span>الله يسلمك</span>
+                            <span class="text-xs text-slate-400 font-normal invisible font-sans">...</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q4">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٤ • Q4</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    أكمل الفراغ بالاسم: <span class="text-emerald-600">أنا اسمي ______</span><br>
+                    <span class="text-sm text-slate-400 font-medium">Fill in the blank with your name: <span class="italic font-semibold">Ana esmy ______</span></span>
+                </h3>
+
+                <div class="relative">
+                    <input type="text" name="q4" placeholder="اكتب اسمك باللغة العربية أو الإنجليزية..." 
+                           class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-emerald-400 focus:outline-none transition-all text-right placeholder:text-slate-300">
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q5">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٥ • Q5</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    ما هي الترجمة الصحيحة لجملة: <span class="text-emerald-600">أشوفَك بكرة</span>؟<br>
+                    <span class="text-sm text-slate-400 font-medium">Choose the correct translation: <span class="italic font-semibold">Ashofak bokra</span></span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q5" value="See you tomorrow" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">See you tomorrow</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q5" value="Good morning" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">Good morning</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q5" value="Thank you" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">Thank you</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q6">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٦ • Q6</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    صيغة المؤنث: كيف تردين إذا قيل لكِ: <span class="text-emerald-600">عاملة إيه؟</span>؟<br>
+                    <span class="text-sm text-slate-400 font-medium">Feminine Form: How do you reply to: <span class="italic font-semibold">3amla eh?</span></span>
+                </h3>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q6" value="كويسة كله تمام" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">كويسة كله تمام</span>
+                            <span class="text-xs text-slate-400">Kwayyesa kolloh tamam</span>
+                        </span>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10">
+                        <input type="radio" name="q6" value="كويس كله تمام" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400">
+                        <span class="text-right flex flex-col">
+                            <span class="font-bold text-slate-700">كويس كله تمام</span>
+                            <span class="text-xs text-slate-400">Kwayyes kolloh tamam</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q7">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٧ • Q7</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    اكتب إجابتك: <span class="text-emerald-600">ما اسمك؟</span><br>
+                    <span class="text-sm text-slate-400 font-medium">Write your answer to: <span class="italic font-semibold">Ma esmak?</span></span>
+                </h3>
+
+                <div>
+                    <input type="text" name="q7" placeholder="اكتب إجابتك هنا..." 
+                           class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-emerald-400 focus:outline-none transition-all text-right placeholder:text-slate-300">
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-100 relative transition-all duration-300 hover:shadow-lg" id="card-q8">
+                <div class="absolute -top-4 right-6 bg-pink-400 text-white text-xs font-bold px-3 py-1 rounded-full">السؤال ٨ • Q8</div>
+                
+                <h3 class="text-lg md:text-xl font-bold text-slate-800 mt-2 mb-4 leading-relaxed text-right">
+                    هل الجملة التالية صحيحة أم خاطئة؟<br>
+                    <span class="text-emerald-600">إن شاء الله</span> تعني <span class="italic font-semibold">"Hopefully / God willing"</span>.<br>
+                    <span class="text-sm text-slate-400 font-medium">Is the following statement True or False?</span>
+                </h3>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="flex flex-col items-center justify-center p-4 rounded-2xl border-2 border-slate-100 hover:border-emerald-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-emerald-50/10 text-center">
+                        <input type="radio" name="q8" value="true" class="w-5 h-5 text-emerald-500 border-slate-300 focus:ring-emerald-400 mb-2">
+                        <span class="font-bold text-emerald-600 text-lg">صح • True</span>
+                    </label>
+                    <label class="flex flex-col items-center justify-center p-4 rounded-2xl border-2 border-slate-100 hover:border-rose-200 cursor-pointer transition-all bg-slate-50/50 hover:bg-rose-50/10 text-center">
+                        <input type="radio" name="q8" value="false" class="w-5 h-5 text-rose-500 border-slate-300 focus:ring-rose-400 mb-2">
+                        <span class="font-bold text-rose-600 text-lg">خطأ • False</span>
+                    </label>
+                </div>
+                <div class="feedback-msg hidden mt-4 text-sm font-bold text-right p-3 rounded-xl"></div>
+            </div>
+
+            <!-- Custom Message Box instead of window.alert -->
+            <div id="custom-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+                <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl border-2 border-slate-100 transform transition-all duration-300 scale-95" id="modal-content">
+                    <div id="modal-icon" class="text-5xl mb-4"></div>
+                    <h4 id="modal-title" class="text-2xl font-black mb-2 text-slate-800"></h4>
+                    <p id="modal-text" class="text-slate-500 font-semibold mb-6"></p>
+                    <button type="button" onclick="closeModal()" class="w-full bubbly-button bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-2xl transition-all">
+                        موافق • OK
+                    </button>
+                </div>
+            </div>
+
+            <!-- Score / Feedback Dashboard Card (Shown after Submission/Check) -->
+            <div id="results-dashboard" class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-[2rem] p-6 md:p-8 shadow-xl hidden text-center relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
+                <h3 class="text-3xl font-black mb-2">ممتاز! عمل رائع 🎉</h3>
+                <p class="text-emerald-100 font-semibold mb-6">Excellent! Great Job!</p>
+                
+                <div class="grid grid-cols-3 gap-3 max-w-md mx-auto bg-white/10 p-4 rounded-2xl backdrop-blur-md mb-6">
+                    <div>
+                        <span class="block text-xs text-emerald-100">إجابة صحيحة</span>
+                        <span id="score-correct" class="text-2xl font-black">0</span>
+                    </div>
+                    <div class="border-x border-white/20">
+                        <span class="block text-xs text-emerald-100">إجابة خاطئة</span>
+                        <span id="score-wrong" class="text-2xl font-black">0</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-emerald-100 font-bold">النسبة</span>
+                        <span id="score-percent" class="text-2xl font-black">0%</span>
+                    </div>
+                </div>
+
+                <div class="text-center font-bold text-lg bg-white text-emerald-700 py-3 px-6 rounded-2xl inline-block shadow-md">
+                    مجموع الدرجات • Total Score: <span id="final-ratio" class="font-black text-xl">0/8</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                <button type="button" id="btn-check" onclick="checkAnswers()" class="bubbly-button w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-4 px-6 rounded-2xl custom-shadow hover:-translate-y-0.5 transition-all text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    تصحيح الواجب • Check Answers
+                </button>
+                
+                <button type="button" id="btn-submit" onclick="submitHomework()" class="bubbly-button w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-6 rounded-2xl custom-shadow hover:-translate-y-0.5 transition-all text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    إرسال الواجب • Submit Homework
+                </button>
+                
+                <button type="button" onclick="resetForm()" class="bubbly-button w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-4 px-6 rounded-2xl transition-all text-center flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    إعادة البدء • Reset
+                </button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <script>
+        // ==========================================
+        //             EMAILJS CONFIGURATION
+        // ==========================================
+        // تم استبدال القيم أدناه بمفاتيح حسابك الحقيقي لتوصيلها تلقائياً بالبريد الإلكتروني
+        const EMAILJS_PUBLIC_KEY = "5tygH9CDz4YDXANdR";  
+        const EMAILJS_SERVICE_ID = "service_nkkp6vn";  
+        const EMAILJS_TEMPLATE_ID = "template_kt5vj04"; 
+
+        // Initialize EmailJS
+        (function() {
+            if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+                emailjs.init(EMAILJS_PUBLIC_KEY);
+            }
+        })();
+
+        // Global states
+        let selectedMatchBtn = null;
+        let pairedMatches = {}; // key: leftButtonId, value: targetButtonId
+        const totalQuestions = 8;
+
+        // Correct Answers Config
+        const answersConfig = {
+            q1: "كويس",
+            q2: "الله يسلمك",
+            q3: {
+                "q3-1": "q3-1", // سلام -> مع السلامة (target contains data-target-id matching q3-1)
+                "q3-2": "q3-2", // مع السلامة -> الله يسلمك
+                "q3-3": "q3-3", // عامل إيه؟ -> كويس
+                "q3-4": "q3-4"  // أشوفك بكرة -> إن شاء الله
+            },
+            q4: ["اسم", "name", "أنا اسمي", "ana esmy"], // Open to anything typed that has length > 1 for basic validity
+            q5: "See you tomorrow",
+            q6: "كويسة كله تمام",
+            q7: "", // Student writes custom name, count as correct if filled
+            q8: "true"
+        };
+
+        // UI Helpers: Custom Modal
+        function showModal(title, text, icon, isSuccess) {
+            const modal = document.getElementById('custom-modal');
+            const content = document.getElementById('modal-content');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            document.getElementById('modal-icon').innerHTML = icon;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
+
+        // Tap-To-Match Controller Logic
+        document.querySelectorAll('.match-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Clear selected left match button styling if there was one
+                if (selectedMatchBtn) {
+                    selectedMatchBtn.classList.remove('border-purple-500', 'bg-purple-100');
+                }
+                
+                selectedMatchBtn = btn;
+                btn.classList.add('border-purple-500', 'bg-purple-100');
+            });
+        });
+
+        document.querySelectorAll('.target-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!selectedMatchBtn) {
+                    showModal("تنبيه • Alert", "الرجاء اختيار كلمة من العمود الأيمن أولاً! (Tap from the right first)", "💡", false);
+                    return;
+                }
+
+                const leftId = selectedMatchBtn.getAttribute('data-match-id');
+                const rightTargetId = btn.getAttribute('data-target-id');
+
+                // If this left option was already paired, clean its old right companion
+                if (pairedMatches[leftId]) {
+                    const oldRightBtn = document.querySelector(`[data-target-id="${pairedMatches[leftId]}"]`);
+                    if (oldRightBtn) {
+                        oldRightBtn.classList.remove('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+                    }
+                }
+
+                // If this right button was paired to a different left button, clear it
+                for (let key in pairedMatches) {
+                    if (pairedMatches[key] === rightTargetId) {
+                        delete pairedMatches[key];
+                        const oldLeftBtn = document.querySelector(`[data-match-id="${key}"]`);
+                        if (oldLeftBtn) {
+                            oldLeftBtn.classList.remove('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+                        }
+                    }
+                }
+
+                // Bind new pairing
+                pairedMatches[leftId] = rightTargetId;
+
+                // Visual Feedback
+                selectedMatchBtn.classList.remove('border-purple-500', 'bg-purple-100');
+                selectedMatchBtn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+                btn.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800');
+
+                selectedMatchBtn = null;
+                updateProgress();
+            });
+        });
+
+        // Track and Update Progress Bar
+        function updateProgress() {
+            let completed = 0;
+
+            // Q1, Q2, Q5, Q6, Q8 (Radio questions)
+            const radioQuestions = ['q1', 'q2', 'q5', 'q6', 'q8'];
+            radioQuestions.forEach(name => {
+                if (document.querySelector(`input[name="${name}"]:checked`)) {
+                    completed++;
+                }
+            });
+
+            // Q3 Matching (Completed if all 4 paired)
+            const matchesCount = Object.keys(pairedMatches).length;
+            if (matchesCount === 4) completed++;
+
+            // Q4 Text input
+            const q4Val = document.querySelector('input[name="q4"]').value.trim();
+            if (q4Val.length > 0) completed++;
+
+            // Q7 Text input
+            const q7Val = document.querySelector('input[name="q7"]').value.trim();
+            if (q7Val.length > 0) completed++;
+
+            const percentage = Math.round((completed / totalQuestions) * 100);
+            document.getElementById('progress-bar').style.width = percentage + "%";
+            document.getElementById('progress-text').innerText = percentage + "%";
+        }
+
+        // Add progress listeners on inputs
+        document.querySelectorAll('input').forEach(elem => {
+            elem.addEventListener('input', updateProgress);
+            elem.addEventListener('change', updateProgress);
+        });
+
+        // Star decoration pop animation
+        function popStars() {
+            for (let i = 0; i < 15; i++) {
+                const star = document.createElement('i');
+                star.className = "fa-solid fa-star text-amber-400 absolute star-anim text-xl pointer-events-none";
+                star.style.left = (Math.random() * 80 + 10) + "%";
+                star.style.top = (window.scrollY + window.innerHeight - 200 - Math.random() * 200) + "px";
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 1200);
+            }
+        }
+
+        // Grade the Answers & show feedback
+        function calculateResults() {
+            let score = 0;
+            let feedback = {};
+
+            // Q1
+            const q1Answer = document.querySelector('input[name="q1"]:checked');
+            feedback.q1 = { correct: false, text: "إجابة خاطئة. الرد الصحيح لـ 'عامل إيه؟' هو: كويس (Kwayyes)." };
+            if (q1Answer && q1Answer.value === answersConfig.q1) {
+                score++;
+                feedback.q1 = { correct: true, text: "إجابة صحيحة! أحسنت ✨" };
+            }
+
+            // Q2
+            const q2Answer = document.querySelector('input[name="q2"]:checked');
+            feedback.q2 = { correct: false, text: "إجابة خاطئة. عند المغادرة نرد بـ 'الله يسلمك'." };
+            if (q2Answer && q2Answer.value === answersConfig.q2) {
+                score++;
+                feedback.q2 = { correct: true, text: "إجابة صحيحة! رائع 🌟" };
+            }
+
+            // Q3 Matching Game
+            let matchCorrect = true;
+            let correctCount = 0;
+            for (let leftKey in answersConfig.q3) {
+                if (pairedMatches[leftKey] === answersConfig.q3[leftKey]) {
+                    correctCount++;
+                } else {
+                    matchCorrect = false;
+                }
+            }
+            if (correctCount === 4) {
+                score++;
+                feedback.q3 = { correct: true, text: "توصيل مثالي وصحيح بالكامل! ممتاز 🎉" };
+            } else {
+                feedback.q3 = { correct: false, text: `توصيل غير مكتمل أو خاطئ. قمت بتوصيل ${correctCount} من أصل 4 بشكل صحيح.` };
+            }
+
+            // Q4
+            const q4Val = document.querySelector('input[name="q4"]').value.trim();
+            if (q4Val.length > 1) {
+                score++;
+                feedback.q4 = { correct: true, text: `جميل جداً! أهلاً بك يا ${q4Val}.` };
+            } else {
+                feedback.q4 = { correct: false, text: "الرجاء كتابة اسمك لتكملة الإجابة." };
+            }
+
+            // Q5
+            const q5Answer = document.querySelector('input[name="q5"]:checked');
+            feedback.q5 = { correct: false, text: "إجابة خاطئة. 'أشوفك بكرة' تعني: See you tomorrow." };
+            if (q5Answer && q5Answer.value === answersConfig.q5) {
+                score++;
+                feedback.q5 = { correct: true, text: "إجابة صحيحة! ترجمة دقيقة 🚀" };
+            }
+
+            // Q6
+            const q6Answer = document.querySelector('input[name="q6"]:checked');
+            feedback.q6 = { correct: false, text: "إجابة خاطئة. للمؤنث نقول: كويسة كله تمام." };
+            if (q6Answer && q6Answer.value === answersConfig.q6) {
+                score++;
+                feedback.q6 = { correct: true, text: "إجابة صحيحة! تفريق رائع للمؤنث 💖" };
+            }
+
+            // Q7
+            const q7Val = document.querySelector('input[name="q7"]').value.trim();
+            if (q7Val.length > 1) {
+                score++;
+                feedback.q7 = { correct: true, text: `ممتاز! تم تسجيل الإجابة.` };
+            } else {
+                feedback.q7 = { correct: false, text: "الرجاء كتابة إجابتك هنا." };
+            }
+
+            // Q8
+            const q8Answer = document.querySelector('input[name="q8"]:checked');
+            feedback.q8 = { correct: false, text: "إجابة خاطئة. العبارة صحيحة تماماً!" };
+            if (q8Answer && q8Answer.value === answersConfig.q8) {
+                score++;
+                feedback.q8 = { correct: true, text: "إجابة صحيحة! إن شاء الله تعني فعلاً God willing 👍" };
+            }
+
+            return { score, feedback };
+        }
+
+        // Action: Check Answers locally
+        function checkAnswers() {
+            const results = calculateResults();
+            
+            // Loop and show inline feedback
+            for (let i = 1; i <= totalQuestions; i++) {
+                const card = document.getElementById(`card-q${i}`);
+                const msgBox = card.querySelector('.feedback-msg');
+                const qFeedback = results.feedback[`q${i}`];
+
+                msgBox.classList.remove('hidden', 'bg-rose-50', 'text-rose-600', 'bg-emerald-50', 'text-emerald-600');
+                if (qFeedback.correct) {
+                    msgBox.classList.add('bg-emerald-50', 'text-emerald-600');
+                    card.classList.add('border-emerald-200');
+                    card.classList.remove('border-rose-200');
+                } else {
+                    msgBox.classList.add('bg-rose-50', 'text-rose-600');
+                    card.classList.add('border-rose-200');
+                    card.classList.remove('border-emerald-200');
+                }
+                msgBox.innerText = qFeedback.text;
+            }
+
+            // Dashboard render
+            const scoreCorrect = results.score;
+            const scoreWrong = totalQuestions - scoreCorrect;
+            const percentage = Math.round((scoreCorrect / totalQuestions) * 100);
+
+            document.getElementById('score-correct').innerText = scoreCorrect;
+            document.getElementById('score-wrong').innerText = scoreWrong;
+            document.getElementById('score-percent').innerText = percentage + "%";
+            document.getElementById('final-ratio').innerText = `${scoreCorrect}/${totalQuestions}`;
+            document.getElementById('results-dashboard').classList.remove('hidden');
+
+            if (percentage >= 80) {
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 }
+                });
+                popStars();
+            }
+
+            document.getElementById('results-dashboard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Action: Submit via EmailJS
+        function submitHomework() {
+            const studentName = document.getElementById('student-name').value.trim();
+            const studentEmail = document.getElementById('student-email').value.trim();
+
+            if (!studentName || !studentEmail) {
+                showModal("بيانات ناقصة • Incomplete Info", "الرجاء إدخال الاسم والبريد الإلكتروني أولاً في أعلى الصفحة لضمان تسجيل واجبك!", "⚠️", false);
+                return;
+            }
+
+            // Process results
+            const results = calculateResults();
+            const percentage = Math.round((results.score / totalQuestions) * 100);
+
+            // Construct payload for EmailJS
+            const templateParams = {
+                student_name: studentName,
+                student_email: studentEmail,
+                score_ratio: `${results.score} / ${totalQuestions}`,
+                percentage: `${percentage}%`,
+                date_time: new Date().toLocaleString('ar-EG'),
+                answers_dump: JSON.stringify({
+                    q1: document.querySelector('input[name="q1"]:checked')?.value || "لم تتم الإجابة",
+                    q2: document.querySelector('input[name="q2"]:checked')?.value || "لم تتم الإجابة",
+                    q3_pairs: pairedMatches,
+                    q4: document.querySelector('input[name="q4"]').value,
+                    q5: document.querySelector('input[name="q5"]:checked')?.value || "لم تتم الإجابة",
+                    q6: document.querySelector('input[name="q6"]:checked')?.value || "لم تتم الإجابة",
+                    q7: document.querySelector('input[name="q7"]').value,
+                    q8: document.querySelector('input[name="q8"]:checked')?.value || "لم تتم الإجابة"
+                }, null, 2)
+            };
+
+            // Double check setup status
+            if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY" || EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID") {
+                showModal(
+                    "واجب مميز! • Great Job!",
+                    `تم حساب درجاتك بنجاح محلياً! درجتك هي ${results.score}/${totalQuestions} بنسبة ${percentage}%.\n\n(ملاحظة للمعلم: يرجى إعداد مفاتيح EmailJS في الكود لتفعيل ميزة الإرسال التلقائي للإيميل).`,
+                    "🎉",
+                    true
+                );
+                checkAnswers();
+                return;
+            }
+
+            // Disable button during active send
+            const submitBtn = document.getElementById('btn-submit');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> جاري الإرسال • Sending...`;
+
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(() => {
+                    showModal("تم الإرسال بنجاح! • Sent!", "تم تسليم الواجب بنجاح إلى المعلم. أحسنت عملاً!", "✅", true);
+                    checkAnswers();
+                })
+                .catch((error) => {
+                    console.error("EmailJS Error:", error);
+                    showModal("خطأ في الإرسال • Error", "حدث خطأ أثناء إرسال واجبك. يرجى مراجعة الاتصال ومحاولة الإرسال مجدداً.", "❌", false);
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
+        }
+
+        // Action: Reset Form
+        function resetForm() {
+            document.getElementById('homework-form').reset();
+            document.getElementById('student-name').value = "";
+            document.getElementById('student-email').value = "";
+            
+            // Clear match classes & states
+            selectedMatchBtn = null;
+            pairedMatches = {};
+            document.querySelectorAll('.match-btn, .target-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-100', 'border-emerald-400', 'text-emerald-800', 'border-purple-500', 'bg-purple-100');
+            });
+
+            // Clear feedback styles
+            document.querySelectorAll('.feedback-msg').forEach(msg => {
+                msg.classList.add('hidden');
+            });
+            for (let i = 1; i <= totalQuestions; i++) {
+                const card = document.getElementById(`card-q${i}`);
+                card.classList.remove('border-emerald-200', 'border-rose-200');
+            }
+
+            document.getElementById('results-dashboard').classList.add('hidden');
+            updateProgress();
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
